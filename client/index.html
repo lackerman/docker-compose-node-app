@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Todo SPA</title>
+    <script type="text/javascript" src="/scripts/vue.min.js"></script>
+</head>
+
+<body>
+    <h1>The age odd Todo SPA</h1>
+    <div id="app">
+        <ul>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript" src="/scripts/main.js"></script>
+
+</html>

@@ -1,0 +1,14 @@
+server:
+  build: server
+  links:
+  - db
+db:
+  image: k0st/alpine-postgres
+  environment:
+  - POSTGRES_DB=testdb
+client:
+  build: client
+  links:
+  - server
+  ports:
+  - "80:80"
