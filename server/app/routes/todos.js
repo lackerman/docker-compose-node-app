@@ -1,32 +1,26 @@
 'use strict';
 
 const db = require('../db/db');
-const router = require('express').Router();
+const router = require('express').Router(); // eslint-disable-line
 
-router.get('/init', (req, res, next) => {
-  db.query('CREATE TABLE todo(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)', (err, result) => {
-    if (err) {
-      return next(err);
-    }
-    res.end();
-  });
-});
+const selectTodosQuery = 'SELECT * FROM todo';
+const insertTodoQuery = 'INSERT INTO todo(text) VALUES ($1)';
 
 router.get('/', (req, res, next) => {
-  db.query('SELECT * FROM todo', (err, result) => {
+  db.query(selectTodosQuery, (err, result) => {
     if (err) {
       return next(err);
     }
-    res.json(result.rows);
+    return res.json(result.rows);
   });
 });
 
 router.post('/', (req, res, next) => {
-  db.upsert('INSERT INTO todo(text) VALUES ($1)', [req.body.text], (err, result) => {
+  db.upsert(insertTodoQuery, [req.body.text], (err) => {
     if (err) {
       return next(err);
     }
-    res.end();
+    return res.end();
   });
 });
 

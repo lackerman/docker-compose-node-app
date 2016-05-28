@@ -1,28 +1,28 @@
 'use strict';
 
 const pg = require('pg');
-const dbServer = (process.env.DB_PORT || 'tcp://192.168.99.100:5432').substring(6);
-const connectionString = `postgres://postgres@${dbServer}/testdb`;
+const connectionString =
+  `postgres://postgres@${process.env.DB_SERVER}:${process.env.DB_PORT}/testdb`;
 
-function upsert(query, upsertValues, callback) {
+function upsert(sqlQuery, upsertValues, callback) {
   const connection = new pg.Client(connectionString);
-  var processFn = (error, result) => {
+  const processFn = (error, result) => {
     connection.end();
     callback(error, result);
   };
   connection.connect();
   if (upsertValues) {
-    connection.query(query, upsertValues, processFn);
+    connection.query(sqlQuery, upsertValues, processFn);
   } else {
-    connection.query(query, processFn);
+    connection.query(sqlQuery, processFn);
   }
 }
 
-function query(query, callback) {
-  upsert(query, undefined, callback);
+function query(sqlQuery, callback) {
+  upsert(sqlQuery, undefined, callback);
 }
 
 module.exports = {
-  query: query,
-  upsert: upsert,
+  query,
+  upsert,
 };

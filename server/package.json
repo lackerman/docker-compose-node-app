@@ -1,24 +1,33 @@
 {
-  "name": "basic-ws",
+  "name": "server",
   "version": "1.0.0",
-  "description": "A basic express web server",
+  "description": "An express web server for the Todo App",
+  "author": "Leo Ackerman",
+  "license": "MIT",
   "readme": "README.md",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint *.js app/ bin/",
+    "pretest": "npm run lint",
+    "prestart": "npm run lint",
+    "start": "env $(cat dev.env | xargs) node app.js"
   },
-  "author": "Leo Ackerman",
-  "license": "ISC",
   "dependencies": {
     "body-parser": "^1.14.2",
     "express": "^4.13.3",
     "pg": "^4.4.3"
   },
+  "devDependencies": {
+    "eslint": "^2.10.2",
+    "eslint-config-airbnb-base": "^3.0.1",
+    "eslint-plugin-import": "^1.2.0"
+  },
   "publishConfig": {
     "registry": "http://artifactory.local/api/npm/npm-local"
   },
   "bin": {
-    "basic-ws": "bin/basic-ws.js"
+    "server": "bin/server.js"
   },
-  "main": "./app/app.js",
+  "main": "app.js",
   "preferGlobal": "true"
 }

@@ -1,26 +1,29 @@
 'use strict';
 
-const express = require('express');
 const bodyParser = require('body-parser');
+const express = require('express');
 const app = express();
+
+const todoRouter = require('./app/routes/todos');
+const adminRouter = require('./app/routes/admin');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: true,
 }));
 
 app.get('/', (req, res) => {
-  res.send("Ok")
+  res.send('Ok');
 });
 
-app.use('/todo', require('./routes/todos'));
-app.use('/admin', require('./routes/admin'));
+app.use('/todo', todoRouter);
+app.use('/admin', adminRouter);
 
 app.use((err, req, res, next) => {
   if (res.headersSent) {
     return next(err);
   }
-  res.status(500).send(`Failed to execute the request. [${err.message}]`);
+  return res.status(500).send(`Failed to execute the request. [${err.message}]`);
 });
 
 const server = app.listen(3000, () => {

@@ -1,14 +1,21 @@
 'use strict';
 
 const db = require('../db/db');
-const router = require('express').Router();
+const router = require('express').Router(); // eslint-disable-line
+
+const createDbQuery = `
+  CREATE TABLE todo(
+    id SERIAL PRIMARY KEY,
+    text VARCHAR(40) NOT NULL,
+    complete BOOLEAN
+  )`;
 
 router.get('/init', (req, res, next) => {
-  db.query('CREATE TABLE todo(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)', (err, result) => {
+  db.query(createDbQuery, (err) => {
     if (err) {
       return next(err);
     }
-    res.end();
+    return res.end();
   });
 });
 
