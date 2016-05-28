@@ -4,5 +4,5 @@ COPY web.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /var/www/
 
-COPY scripts ./scripts/
+COPY dist ./public/
 COPY index.html ./

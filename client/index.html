@@ -2,20 +2,29 @@
 <html>
 
 <head>
-    <title>Todo SPA</title>
-    <script type="text/javascript" src="/scripts/vue.min.js"></script>
+  <title>Todo SPA</title>
+  <link rel="stylesheet" href="/public/styles.css">
 </head>
 
 <body>
-    <h1>The age odd Todo SPA</h1>
-    <div id="app">
-        <ul>
+  <div class="container">
+    <div class="columns">
+      <div class="column col-1"></div>
+      <div class="column col-10">
+        <h1>The age old Todo SPA</h1>
+        <div id="app">
+          <ul>
             <li v-for="todo in todos">
-                {{ todo.text }}
+              {{ todo.text }}
             </li>
-        </ul>
+          </ul>
+        </div>
+      </div>
+      <div class="column col-1"></div>
     </div>
+  </div>
 </body>
-<script type="text/javascript" src="/scripts/main.js"></script>
+<script type="text/javascript" src="/public/app.bundle.js"></script>
+<script type="text/javascript" src="/public/vendor.bundle.js"></script>
 
 </html>

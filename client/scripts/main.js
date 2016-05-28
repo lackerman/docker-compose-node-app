@@ -1,53 +1,34 @@
-function encodeJSON(json) {
-  return json ? Object.keys(json).map(function(key) {
-    return encodeURIComponent(key) + '=' +
-      encodeURIComponent(json[key]);
-  }).join('&') : undefined;
-};
+'use strict';
 
-function request(type, url, params, onSuccess) {
-  var req = new XMLHttpRequest();
-  var encodedParams = encodeJSON(params);
-  req.onreadystatechange = function() {
-    if (req.readyState == 4 && req.status == 200 && onSuccess) {
-      onSuccess(req);
-    }
-  }
-  req.open(type, url, true);
-  if (type === 'POST') {
-    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-  }
-  req.send(encodedParams);
-};
+const request = require('axios');
 
-var endPoint = '/api/todo';
-
-new Vue({
-
+new Vue({ // eslint-disable-line
   el: '#app',
 
   data: {
-    todos: []
+    todos: [],
   },
 
-  created: function() {
+  created() {
     this.fetch();
   },
 
   methods: {
-    fetch: function() {
-      var self = this;
-      request('GET', endPoint, undefined, function(req) {
-        if (req.status === 200) {
-          self.todos = JSON.parse(req.responseText);
-        }
-      });
+    fetch() {
+      request
+        .get('/api/todo')
+        .then((res) => {
+          this.todos = res.data;
+        });
     },
-    add: function() {
-      var self = this;
-      request('POST', endPoint, undefined, function(req) {
-        self.fetch();
-      });
-    }
-  }
+    add() {
+      request
+        .post('/api/todo', {
+          data: this.text,
+        })
+        .then(() => {
+          this.fetch();
+        });
+    },
+  },
 });
