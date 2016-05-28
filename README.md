@@ -1,15 +1,16 @@
-# Docker Compose Example
+# Node Web App Template using docker-compose
 
-Todo Single Page Application hosted on nginx with a reverse proxy to a basic NodeJS JSON server connecting to Postgress all run with docker-compose
+Todo Single Page Application hosted on nginx with a reverse proxy to a basic
+NodeJS express server connecting to Postgres all run with docker-compose
 
 3 containers
-- nodejs (server)
+- nodejs & express (server)
 - postgres
 - client (client)
 
 ```shell
 # Startup the system
-docker-compose up
+docker-compose up --rm
 
 # Remove all exited containers
 docker rm -v $(docker ps -a -q --filter="status=exited")
